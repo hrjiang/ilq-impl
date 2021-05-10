@@ -18,7 +18,7 @@ let parse_with_error lexbuf =
       fprintf stderr "%a: syntax error\n" print_position lexbuf ;
       exit (-1)
 
-let print_complex z = printf "%f + %f i" z.re z.im
+let print_complex z = printf "%.3f + %.3f i" z.re z.im
 
 let rec print_complex_mat n i zl =
   match zl with

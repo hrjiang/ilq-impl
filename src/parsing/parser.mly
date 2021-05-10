@@ -66,15 +66,3 @@ gate:
   | GATE; name = ID { Gate name }
   | CONTROLLED; g = gate { Controlled g }
 ;
-
-
-
-
-
-
-
-
-
-
-
-
