@@ -1,4 +1,4 @@
-open Core
+open Printf
 open Complex
 open Lexer
 open Lexing
@@ -18,7 +18,7 @@ let parse_with_error lexbuf =
       fprintf stderr "%a: syntax error\n" print_position lexbuf ;
       exit (-1)
 
-let print_complex z = printf "%.3f + %.3f i" z.re z.im
+let print_complex z = printf "%.3f+%.3fi" z.re z.im
 
 let rec print_complex_mat n i zl =
   match zl with
@@ -74,7 +74,7 @@ let rec print_comm c indent =
       print_comm c1 (indent + 1) ;
       printf "\n" ;
       print_indent indent ;
-      printf "}{" ;
+      printf "}{\n" ;
       print_comm c2 (indent + 1) ;
       printf "\n" ;
       print_indent indent ;
