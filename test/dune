@@ -1,0 +1,4 @@
+(executable
+ (name parse_and_print)
+ (modules parse_and_print)
+ (libraries parsing))

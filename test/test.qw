@@ -1,0 +1,16 @@
+proj P := square 2
+       	  	 [1.0, 2.0,
+		 3.0, 4.0];
+proj Q := square 2
+       	  	 [0.0 + 1.0i, 0.0 + 2.0i,
+		 0.0 + 3.0i, 0.0 + 4.0i]
+
+
+while(q0){
+  if(q1){
+    controlled controlled gate X [ q0, q1, q2 ]
+  }{
+    init q2; skip
+  }
+};
+assert([q0, q1], Q)
