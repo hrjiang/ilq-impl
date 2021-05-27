@@ -35,6 +35,19 @@ type comm =
 
 type program = Prog of proj_defn list * presumtion * comm
 
-(* Return free variables in the command *)
+(* Free variables in the command *)
 
-val fv : comm -> qvar list
+let addvar a l = if List.mem a l then l else l @ [a]
+
+let rec addvars ql l =
+  match ql with [] -> l | a :: ql' -> addvars ql' (addvar a l)
+
+let rec fv c =
+  match c with
+  | Skip            -> []
+  | Assert (ql, _)  -> ql
+  | Init q          -> [q]
+  | Unitary (_, ql) -> ql
+  | Seq (c1, c2)    -> addvars (fv c2) (fv c1)
+  | If (q, c1, c2)  -> addvars (fv c1 @ fv c2) [q]
+  | While (q, c)    -> addvars (fv c) [q]

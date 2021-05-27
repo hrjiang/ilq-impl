@@ -1,0 +1,21 @@
+proj R := square 2 [1.0, 0.0,
+       	  	    0.0, 0.0];
+
+proj VR := square 2 [0.333333, 0. - 0.471405i,
+     	   	     0. + 0.471405i, 0.666667]
+		    
+presume([target], R)
+
+init ancilla;
+gate X [ancilla];
+while (ancilla) {
+  gate X [ancilla];
+  gate H [ancilla];
+  gate T [ancilla];
+  controlled gate X [ancilla, target];
+  gate H [ancilla];
+  controlled gate X [ancilla, target];
+  gate T [ancilla];
+  gate H [ancilla]
+};
+assert([target], VR)

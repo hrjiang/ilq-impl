@@ -48,6 +48,11 @@ let rec print_qvars ql =
   | [q]      -> printf "%s" q
   | q :: ql' -> printf "%s, " q ; print_qvars ql'
 
+let print_presumption pre =
+  match pre with
+  | Presume (args, proj) ->
+      printf "presume([" ; print_qvars args ; printf "], %s)" proj
+
 let rec print_gate g =
   match g with
   | Gate a        -> printf "%s" a
@@ -62,19 +67,25 @@ let rec print_indent indent =
 let rec print_comm c indent =
   print_indent indent ;
   match c with
-  | Skip              -> printf "skip;"
+  | Skip              -> printf "skip"
   | Assert (ql, proj) ->
-      printf "assert([" ; print_qvars ql ; printf "], %s);" proj
+      printf "assert([" ; print_qvars ql ; printf "], %s)" proj
   | Init q            -> printf "init(%s)" q
   | Unitary (g, ql)   ->
-      print_gate g ; printf "(" ; print_qvars ql ; printf ");"
-  | Seq (c1, c2)      -> print_comm c1 0 ; printf "\n" ; print_comm c2 indent
+      print_gate g ; printf "[" ; print_qvars ql ; printf "]"
+  | Seq (c1, c2)      -> print_comm c1 0 ; printf ";\n" ; print_comm c2 indent
+  | If (q, c1, Skip)  ->
+      printf "if (%s) {\n" q ;
+      print_comm c1 (indent + 1) ;
+      printf "\n" ;
+      print_indent indent ;
+      printf "}\n"
   | If (q, c1, c2)    ->
       printf "if (%s) {\n" q ;
       print_comm c1 (indent + 1) ;
       printf "\n" ;
       print_indent indent ;
-      printf "}{\n" ;
+      printf "} else {\n" ;
       print_comm c2 (indent + 1) ;
       printf "\n" ;
       print_indent indent ;
@@ -88,9 +99,23 @@ let rec print_comm c indent =
 
 let print_parsed_ast p =
   match p with
-  | Prog (proj_defns, c) -> print_projs proj_defns ; print_comm c 0
+  | Prog (proj_defns, pre, c) ->
+      print_projs proj_defns ;
+      printf "\n" ;
+      print_presumption pre ;
+      printf "\n" ;
+      print_comm c 0
+
+let print_fv ql =
+  printf "\n\nFree variables are:\n" ;
+  List.iter (printf "%s ") ql
 
 let parse_and_print lexbuf =
   match parse_with_error lexbuf with
-  | Some p -> print_parsed_ast p ; printf "\n"
+  | Some p -> (
+      print_parsed_ast p ;
+      match p with
+      | Prog (_, _, c) ->
+          print_fv (fv c) ;
+          printf "\n" )
   | None   -> ()

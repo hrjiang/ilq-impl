@@ -44,10 +44,14 @@ rule read_token = parse
   | "gate" { GATE }
   | "controlled" { CONTROLLED }
   | "if" { IF }
+  | "then" { THEN }
+  | "else" {ELSE}
   | "while" { WHILE }
   | "proj" { PROJ }
+  | "presume" { PRESUME }
   | "square" { SQUARE }
   | "+" { PLUS }
+  | "-" { MINUS }
   | "i" { IM }
   | id { ID (Lexing.lexeme lexbuf) }
   | eof { EOF }

@@ -1,6 +1,5 @@
 (library
- (name parsing)
- (modules_without_implementation parsed_ast))
+ (name parsing))
 
 (ocamllex lexer)
 

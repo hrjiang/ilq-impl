@@ -1,0 +1,17 @@
+proj R := square 2 [1.0, 0.0,
+       	  	    0.0, 0.0]
+		    
+presume([input], R)
+
+init ancilla;
+init output;
+gate H [ancilla];
+controlled gate X [ancilla, output];
+controlled gate X [input, ancilla];
+gate H [input];
+if (ancilla) then { gate X [output] };
+if (input) then { gate Z [output] };
+assert([output], R)
+
+
+
