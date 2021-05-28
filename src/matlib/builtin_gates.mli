@@ -5,7 +5,8 @@ module C = Complex
 
 val pi : float
 
-(* Single qubit gates *)
+(** Single qubit gates *)
+
 val x : mat
 
 val y : mat
@@ -16,12 +17,12 @@ val h : mat
 
 val t : mat
 
-(* The gate for RUS example: (I + i√2X)/√3 *)
 val v : mat
+(** The gate for RUS example: (I + i√2X)/√3 *)
 
-(* A function mapping gate names (strings) to the corresponding matrix. 
- * We may update the function to extend the gate-set. *)
 val gates : string -> mat option
+(** Map gate names (strings) to the corresponding matrix. We may update the
+    function to extend the gate-set. *)
 
 (* Basis of 2x2 matrices *)
 (* |0><0| *)
@@ -36,5 +37,8 @@ val b2 : mat
 (* |1><1| *)
 val b3 : mat
 
-(* Controlled gates *)
+(** Controlled gate *)
+
 val controlled_gate : mat -> mat
+(** [controlled_gate g]: construct controlled-g using a single qubit as
+    control. I.e., I \oplus g *)

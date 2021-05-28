@@ -5,11 +5,12 @@ proj Q := square 2
        	  	 [0.0 + 1.0i, 0.0 + 2.0i,
 		 0.0 + 3.0i, 0.0 + 4.0i]
 
+presume([q0, q1], P)
 
 while(q0){
-  if(q1){
+  if (q1) then {
     controlled controlled gate X [ q0, q1, q2 ]
-  }{
+  } else {
     init q2; skip
   }
 };

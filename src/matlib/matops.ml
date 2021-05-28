@@ -20,7 +20,7 @@ let padding m g q n =
 let rearrange m g_glob permut =
   let invp = Utils.Array.argsort permut in
   let permut' =
-    Array.append invp (Array.map (fun index -> Int.add index m) invp)
+    Array.append invp (Array.map (Int.add m) invp)
   in
   ( Ndarray.Z.reshape g_glob (Array.make (Int.mul m 2) 2)
   |> Ndarray.Z.transpose ~axis:permut'
@@ -33,10 +33,11 @@ let rearrange_local m n op_mat permut =
 
 let apply op rho = op *@ rho *@ ctranspose op
 
-let seq_list n = 
-  let rec seq_list_rev n =
-    if Int.equal (compare 0 n) 1 then [] else n :: seq_list_rev (pred n)
-  in List.rev (seq_list_rev n)
+let seq_list n =
+  let rec seq_list_rev m =
+    if Int.equal (compare 0 m) 1 then [] else m :: seq_list_rev (pred m)
+  in
+  List.rev (seq_list_rev n)
 
 let supp m =
   let eigvecs, eigvals = Linalg.Z.eig m in
