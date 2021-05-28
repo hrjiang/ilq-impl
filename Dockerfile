@@ -18,6 +18,9 @@ RUN opam install conf-openblas
 RUN opam install stdio
 RUN OWL_CFLAGS="-g -O3 -Ofast -march=native -funroll-loops -ffast-math -DSFMT_MEXP=19937 -fno-strict-aliasing -Wno-tautological-constant-out-of-range-compare" opam install owl
 
+# install menhir
+RUN opam install menhir
+
 # setup entry point
 
 WORKDIR /app
