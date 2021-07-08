@@ -2,3 +2,8 @@
  (name parse_and_print)
  (modules parse_and_print)
  (libraries parsing))
+
+(executable
+ (name infer)
+ (modules infer)
+ (libraries ilqinfer))
