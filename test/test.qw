@@ -5,7 +5,7 @@ proj Q := square 2
        	  	 [0.0 + 1.0i, 0.0 + 2.0i,
 		 0.0 + 3.0i, 0.0 + 4.0i]
 
-presume([q0, q1], P)
+presume([q0], P)
 
 while(q0){
   if (q1) then {
@@ -14,4 +14,4 @@ while(q0){
     init q2; skip
   }
 };
-assert([q0, q1], Q)
+assert([q0], Q)
