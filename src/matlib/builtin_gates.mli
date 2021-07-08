@@ -15,10 +15,15 @@ val z : mat
 
 val h : mat
 
+val s : mat
+
 val t : mat
 
 val v : mat
 (** The gate for RUS example: (I + i√2X)/√3 *)
+
+val v3 : mat
+(** The gate for RUS v3 example: (I + 2iZ)/√5 *)
 
 val gates : string -> mat option
 (** Map gate names (strings) to the corresponding matrix. We may update the
