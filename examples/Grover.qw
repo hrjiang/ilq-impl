@@ -1,0 +1,57 @@
+proj I := square 2 [1.0, 0.0,
+       	  	    0.0, 1.0];
+
+proj R := square 4 [0.0, 0.0, 0.0, 0.0,
+       	  	    0.0, 0.0, 0.0, 0.0,
+       	  	    0.0, 0.0, 0.0, 0.0,
+       	  	    0.0, 0.0, 0.0, 1.0]		    
+		    
+presume([r0], I)
+
+init q0;
+init q1;
+init q2;
+init q3;
+init r0;
+
+gate X [r0];
+
+gate H [q0];
+gate H [q1];
+gate H [q2];
+gate H [q3];
+
+while (r0) {
+
+  controlled gate Z [q1, q0];
+
+  gate H [q0];
+  gate H [q1];
+  gate H [q2];
+  gate H [q3];  
+
+  gate X [q0];
+  gate X [q1];
+  gate X [q2];
+  gate X [q3];  
+  controlled gate Z [q0, q1];
+  gate X [q0];
+  gate X [q1];
+  gate X [q2];
+
+
+  gate H [q0];
+  gate H [q1];
+  gate H [q2];
+  gate H [q3];  
+
+  gate X [r0]
+
+};
+
+if (q0) then { skip };
+if (q1) then { skip };
+if (q2) then { skip };
+if (q3) then { skip };
+
+assert([q0, q1], R)

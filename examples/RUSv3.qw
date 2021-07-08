@@ -1,0 +1,26 @@
+proj R := square 2 [0.0, 0.0,
+       	  	    0.0, 1.0]
+
+presume([target], R)
+
+init ancilla0;
+init ancilla1;
+init control;
+gate X [control];
+
+while (control) {
+  init ancilla0;
+  init ancilla1;
+  gate H [ancilla0];
+  gate H [ancilla1];
+  controlled controlled gate X [ancilla0, ancilla1, target];
+  gate S [target];
+  controlled controlled gate X [ancilla0, ancilla1, target];
+  gate H [ancilla0];
+  gate H [ancilla1];
+  if (ancilla0) then { skip };
+  if (ancilla1) then { skip };
+  gate X [ancilla0];
+  gate X [ancilla1];
+  controlled controlled gate X [ancilla0, ancilla1, control]
+};
